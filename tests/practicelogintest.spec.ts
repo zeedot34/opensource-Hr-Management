@@ -1,20 +1,25 @@
-import test, { expect } from "@playwright/test";
-import { execPath } from "process";
+import test, { expect, Page } from "@playwright/test";
+import { Login } from "../../global/global.call.ts";
 
 test('has title', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
   await page.waitForTimeout(2000);
   await expect(page).toHaveTitle(/OrangeHRM/);
-  await page.close();
+//   await page.close();
 });
 
 test('demo login test1', async({page}) => {
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    await expect(page).toHaveTitle(/OrangeHRM/);
-    await page.getByPlaceholder('username').fill('Admin');
-    await page.getByPlaceholder('password').fill('admin123');
-    await page.getByRole('button', { name: 'Login' }).click();
+    Login(page);
+
+    // await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+    // await expect(page).toHaveTitle(/OrangeHRM/);
+    // await page.getByPlaceholder('username').fill('Admin');
+    // await page.getByPlaceholder('password').fill('admin123');
+    // await page.getByRole('button', { name: 'Login' }).click();
+    // await expect(page).toHaveURL(/.*\/dashboard\/index/);
+    //assertion missing here (Chat gpt ku bolna url assertion lagaiy yahan dashboar ki assertion lgai)
+    // is ku dashboard k url daina promtp men
     await page.close();
 
 });
@@ -22,12 +27,13 @@ test('demo login test1', async({page}) => {
 
   
 test('demo login and add a user', async({page}) => {
-
+    // yahan se
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
     await expect(page).toHaveTitle(/OrangeHRM/);
     await page.getByPlaceholder('username').fill('Admin');
     await page.getByPlaceholder('password').fill('admin123');
     await page.getByRole('button', { name: 'Login' }).click();
+    // yahan tak ka function bnay ga
 
     await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
     await expect(page).toHaveURL(/.*\/dashboard\/index/);
@@ -108,22 +114,22 @@ test('demo search and delete', async({page}) => {
     const dropdownOptions = page.locator('.oxd-autocomplete-dropdown .oxd-autocomplete-option');
 
 
-await page.waitForTimeout(3000); 
-await dropdownOptions.first().waitFor({ state: 'visible' });
+    await page.waitForTimeout(3000); 
+    await dropdownOptions.first().waitFor({ state: 'visible' });
 
 
-const optionsText = await dropdownOptions.allTextContents();
-console.log('Available options:', optionsText);
+    const optionsText = await dropdownOptions.allTextContents();
+    console.log('Available options:', optionsText);
 
-await dropdownOptions.first().click();
+    await dropdownOptions.first().click();
 
-await page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);
 
-await page.getByRole('button', { name: 'Search' }).click();
+    await page.getByRole('button', { name: 'Search' }).click();
 // await page.waitForTimeout(1000)
-await expect(page).toHaveURL(/.*\/admin\/viewSystemUsers/);
+    await expect(page).toHaveURL(/.*\/admin\/viewSystemUsers/);
 
-await page.getByRole('row', { name: ' Admin5 Admin' }).getByRole('button').first().click();
+    await page.getByRole('row', { name: ' Admin5 Admin' }).getByRole('button').first().click();
     await page.waitForTimeout(2000);
     await page.getByRole('button', { name: ' Yes, Delete' }).click();
     // await page.waitForTimeout(6000);
@@ -196,3 +202,7 @@ test('demo negative login test3', async({page}) => {
  function getByPlaceholder(arg0: string) {
     throw new Error("Function not implemented.");
  }
+function Login(page: Page) {
+    throw new Error("Function not implemented.");
+}
+
