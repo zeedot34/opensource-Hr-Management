@@ -1,5 +1,5 @@
 import test, { expect, Page } from "@playwright/test";
-import { Login } from "../../global/global.call.ts";
+import { loginToDashboard } from "../global/global.call";
 
 test('has title', async ({ page }) => {
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
@@ -8,35 +8,23 @@ test('has title', async ({ page }) => {
 //   await page.close();
 });
 
-test('demo login test1', async({page}) => {
+test('demo login test1', async ({ page }) => {
+   
+    await loginToDashboard(page);
+    await page.waitForTimeout(5000);
 
-    Login(page);
-
-    // await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    // await expect(page).toHaveTitle(/OrangeHRM/);
-    // await page.getByPlaceholder('username').fill('Admin');
-    // await page.getByPlaceholder('password').fill('admin123');
-    // await page.getByRole('button', { name: 'Login' }).click();
-    // await expect(page).toHaveURL(/.*\/dashboard\/index/);
-    //assertion missing here (Chat gpt ku bolna url assertion lagaiy yahan dashboar ki assertion lgai)
-    // is ku dashboard k url daina promtp men
-    await page.close();
-
-});
+    await page.close(); 
+  });
 
 
   
 test('demo login and add a user', async({page}) => {
     // yahan se
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    await expect(page).toHaveTitle(/OrangeHRM/);
-    await page.getByPlaceholder('username').fill('Admin');
-    await page.getByPlaceholder('password').fill('admin123');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await loginToDashboard(page);
     // yahan tak ka function bnay ga
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
-    await expect(page).toHaveURL(/.*\/dashboard\/index/);
+    // await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
+    // await expect(page).toHaveURL(/.*\/dashboard\/index/);
 
     await page.waitForTimeout(2000);
 
@@ -45,6 +33,7 @@ test('demo login and add a user', async({page}) => {
     await expect(page).toHaveURL(/.*\/admin\/viewSystemUsers/);
 
     await expect(page.getByText('System Users')).toBeVisible();
+    await page.waitForTimeout(2000);
     await page.getByRole('button', { name: ' Add' }).click();
     
     await expect(page).toHaveURL(/.*\/admin\/saveSystemUser/);
@@ -85,14 +74,10 @@ await dropdownOptions.first().click();
 
 test('demo search and delete', async({page}) => {
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    await expect(page).toHaveTitle(/OrangeHRM/);
-    await page.getByPlaceholder('username').fill('Admin');
-    await page.getByPlaceholder('password').fill('admin123');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await loginToDashboard(page);
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
-    await expect(page).toHaveURL(/.*\/dashboard\/index/);
+    // await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
+    // await expect(page).toHaveURL(/.*\/dashboard\/index/);
 
     await page.waitForTimeout(3000)
 
@@ -128,6 +113,7 @@ test('demo search and delete', async({page}) => {
     await page.getByRole('button', { name: 'Search' }).click();
 // await page.waitForTimeout(1000)
     await expect(page).toHaveURL(/.*\/admin\/viewSystemUsers/);
+    await page.waitForTimeout(1000)
 
     await page.getByRole('row', { name: ' Admin5 Admin' }).getByRole('button').first().click();
     await page.waitForTimeout(2000);
