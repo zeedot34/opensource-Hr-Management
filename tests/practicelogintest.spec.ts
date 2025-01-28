@@ -12,8 +12,8 @@ test('demo login test1', async ({ page }) => {
    
     await loginToDashboard(page);
     await page.waitForTimeout(5000);
-
-    await page.close(); 
+    
+    // await page.close(); 
   });
 
 
@@ -124,29 +124,27 @@ test('demo search and delete', async({page}) => {
 
 });
 
-test('demo', async({page}) => {
+// test('demo', async({page}) => {
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    await expect(page).toHaveTitle(/OrangeHRM/);
-    await page.getByPlaceholder('username').fill('Admin');
-    await page.getByPlaceholder('password').fill('admin123');
-    await page.getByRole('button', { name: 'Login' }).click();
-    await page.close();
+//     await loginToDashboard(page);
 
-});
+//     await page.getByRole('link', { name: 'Time' }).click()
+//     await expect(page).toHaveURL(/.*\/time\/viewEmployeeTimesheet/);
+
+
+//     await page.close();
+
+// });
 
 
 
 
 test('demo logout test1', async({page}) => {
 
-    await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-    await page.getByPlaceholder('username').fill('Admin');
-    await page.getByPlaceholder('password').fill('admin123');
-    await page.getByRole('button', { name: 'Login' }).click();
+    await loginToDashboard(page);
     await page.waitForTimeout(2000);
-    
     await page.locator('span').locator('i').click();
+    await page.waitForTimeout(2000);
     await page.getByRole('menuitem', { name: 'Logout' }).click();
     await page.waitForTimeout(2000);
     await expect(page).toHaveTitle(/OrangeHRM/);
