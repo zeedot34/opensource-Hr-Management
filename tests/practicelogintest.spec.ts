@@ -99,7 +99,7 @@ test('demo search and delete', async({page}) => {
     const dropdownOptions = page.locator('.oxd-autocomplete-dropdown .oxd-autocomplete-option');
 
 
-    await page.waitForTimeout(3000); 
+    await page.waitForTimeout(4000); 
     await dropdownOptions.first().waitFor({ state: 'visible' });
 
 
@@ -114,6 +114,9 @@ test('demo search and delete', async({page}) => {
 // await page.waitForTimeout(1000)
     await expect(page).toHaveURL(/.*\/admin\/viewSystemUsers/);
     await page.waitForTimeout(1000)
+    await page.getByText('Admin5').isVisible();
+    // await page.waitForTimeout(2000)
+    // await page.getByRole('button', { name: '' }).nth(1).click();
 
     await page.getByRole('row', { name: ' Admin5 Admin' }).getByRole('button').first().click();
     await page.waitForTimeout(2000);
